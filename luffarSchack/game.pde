@@ -73,7 +73,7 @@ class Game {
             read = true;
           } else if (incoming.indexOf(',') == 2) {
             r = int(incoming.substring(0, 2));
-            c = int(incoming.substring(4));
+            c = int(incoming.substring(3));
             read = true;
           }
         }
@@ -111,7 +111,7 @@ class Game {
             c = int(incoming.substring(2));
           } else if (incoming.indexOf(',') == 2) {
             r = int(incoming.substring(0, 2));
-            c = int(incoming.substring(4));
+            c = int(incoming.substring(3));
           }
         }
         if (incoming.length() == 5) {
