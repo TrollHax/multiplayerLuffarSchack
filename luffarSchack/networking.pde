@@ -21,13 +21,13 @@ class Networking {
 
   //Function for creating a host computer
   void createHost() {
-    thisPc = new Server(luffarSchack.this, 12345);
+    thisPc = new Server(luffarSchack.this, 25565);
     thisGame.gameServer = thisPc;
   }
 
   //Function for creating a client computer
   void createClient(String IP) {
-    clientPc = new Client(luffarSchack.this, IP, 12345);
+    clientPc = new Client(luffarSchack.this, IP, 25565);
     thisGame.gameClient = clientPc;
   }
 
