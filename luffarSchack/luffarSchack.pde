@@ -7,11 +7,11 @@ PImage bg;
 Menu gameMenu;
 Game thisGame;
 Networking network;
-Server thisServer;
+
 
 void setup() {
-  fullScreen();
-  bg = loadImage("Images/gradientV2.png");
+  size(1920, 1080);
+  bg = loadImage("Data/Images/gradientV2.png");
   gameMenu = new Menu();
   thisGame = new Game();
   network = new Networking();
