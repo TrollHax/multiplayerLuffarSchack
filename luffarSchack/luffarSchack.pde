@@ -33,7 +33,7 @@ void draw() {
     gameMenu.drawClientMenu();
     break;
 
-  case "DEBUG" :
+  case "GAME" :
     thisGame.run();
     break;
   }
@@ -51,7 +51,7 @@ void keyPressed() {
       network.createClient(gameMenu.hostAdress);
       thisGame.gameState = "CLIENT";
       thisGame.gameClient.write(1);
-      state = "DEBUG";
+      state = "GAME";
     }
   }
 }
@@ -76,7 +76,7 @@ void mouseReleased() {
     }
   }
 
-  if (state == "DEBUG") {
+  if (state == "GAME") {
     //assign the clicked-on box with the current player's mark
     int row = mouseX/40;
     int col = mouseY/40;

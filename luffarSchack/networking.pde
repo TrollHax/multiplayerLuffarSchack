@@ -1,7 +1,7 @@
 /**
  * The networking class contains functions
  * for everything related to networking
- * between the host anc client
+ * between the host and client
  *
  * @author  Reymond T
  * @version 1.0
