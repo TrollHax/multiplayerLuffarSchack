@@ -10,7 +10,7 @@ Networking network;
 
 
 void setup() {
-  size(1920, 1080);
+  fullScreen();
   bg = loadImage("Data/Images/gradientV2.png");
   gameMenu = new Menu();
   thisGame = new Game();
