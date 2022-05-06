@@ -7,6 +7,7 @@ PImage bg;
 Menu gameMenu;
 Game thisGame;
 Networking network;
+boolean initializedHost, initializedClient;
 
 
 void setup() {
@@ -14,7 +15,8 @@ void setup() {
   bg = loadImage("Data/Images/gradientV2.png");
   gameMenu = new Menu();
   thisGame = new Game();
-  network = new Networking();
+  initializedHost = false;
+  initializedClient = false;
 
   state = "MENU";
 }
@@ -26,10 +28,18 @@ void draw() {
     break;	
 
   case "SERVER" :
+    if (!initializedHost) {
+      network = new Networking("Host");
+      initializedHost = true;
+    }
     gameMenu.drawHostMenu();
     break;
 
   case "CLIENT" :
+    if (!initializedClient) {
+      network = new Networking("Client");
+      initializedClient = true;
+    }
     gameMenu.drawClientMenu();
     break;
 
@@ -50,7 +60,7 @@ void keyPressed() {
     } else if (key == ENTER) {
       network.createClient(gameMenu.hostAdress);
       thisGame.gameState = "CLIENT";
-      thisGame.gameClient.write(1);
+      network.sendData("1");
       state = "GAME";
     }
   }
@@ -62,7 +72,6 @@ void mouseReleased() {
       mouseX >= (width/2-400)-200 &&
       mouseY <= (height/2)+100 &&
       mouseY >= (height/2)-100) {
-      network.createHost();
       state = "SERVER";
       thisGame.gameState = "HOST";
       //hold = millis(); //To avoid accidental placement of X or O
@@ -81,12 +90,12 @@ void mouseReleased() {
     int row = mouseX/40;
     int col = mouseY/40;
     if (thisGame.grid[row][col] == 0) { //Checks if selected box is empty
-      if (mouseButton == LEFT && thisGame.gameState == "HOST") {
+      if (mouseButton == LEFT && thisGame.gameState == "HOST" && thisGame.hostTurn) {
         thisGame.grid[row][col] = 1;
-        network.thisPc.write(row + "," + col);
-      } else if (mouseButton == LEFT && thisGame.gameState == "CLIENT") {
+        network.sendData(row + "," + col);
+      } else if (mouseButton == LEFT && thisGame.gameState == "CLIENT" && thisGame.clientTurn) {
         thisGame.grid[row][col] = 2;
-        network.clientPc.write(row + "," + col);
+        network.sendData(row + "," + col);
       }
     }
   }
