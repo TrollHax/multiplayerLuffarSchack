@@ -3,7 +3,7 @@
  * for all of the menus used by the game
  *
  * @author  Reymond T
- * @version 1.0
+ * @version 1.2
  * @since   2022-04-10
  */
 
@@ -43,9 +43,10 @@ class Menu {
     text("Waiting for player...", width/2, height/2);
     textSize(50);
     text("IP-Adress (Give to other player):" + network.getIP(), width/2, 1040);
-    Client thisPc = thisGame.gameServer.available();
-    if (thisPc != null) {
-      state = "DEBUG";
+    Client otherPc = network.thisServerPc.available();
+    if (otherPc != null) {
+      state = "GAME";
+      thisGame.hostTurn = true;
     }
   }
 
