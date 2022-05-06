@@ -4,31 +4,54 @@
  * between the host and client
  *
  * @author  Reymond T
- * @version 1.0
+ * @version 1.2
  * @since   2022-04-10
  */
 
 class Networking {
 
-  Server thisPc;
-  Client clientPc;
-  String outgoing, incoming;
+  Server thisServerPc;
+  Client thisClientPc;
+  String outgoing, incoming, pc;
 
-  Networking() {
+  Networking(String _pc) {
+
     outgoing = "";
     incoming = "";
-  }
+    pc = _pc;
 
-  //Function for creating a host computer
-  void createHost() {
-    thisPc = new Server(luffarSchack.this, 25565);
-    thisGame.gameServer = thisPc;
+    if (pc == "Host"){
+      thisServerPc = new Server(luffarSchack.this, 25565);
+    }
   }
 
   //Function for creating a client computer
   void createClient(String IP) {
-    clientPc = new Client(luffarSchack.this, IP, 25565);
-    thisGame.gameClient = clientPc;
+    thisClientPc = new Client(luffarSchack.this, IP, 25565);
+  }
+
+  //Function for sending information to other player
+  void sendData(String information) {
+    if (pc == "Host") {
+      thisServerPc.write(information);
+    } else if (pc == "Client") {
+      thisClientPc.write(information);
+    }
+  }
+
+  //Function for reading information from other player
+  String readData() {
+    if (pc == "Host") {
+      Client clientPc = thisServerPc.available();
+      if (clientPc != null) {
+        incoming = clientPc.readString();
+      }
+    } else if (pc == "Client") {
+      if (thisClientPc.available() > 0) {
+        incoming = thisClientPc.readString();
+      }
+    }
+    return incoming;
   }
 
   //Function for getting ip of host computer
