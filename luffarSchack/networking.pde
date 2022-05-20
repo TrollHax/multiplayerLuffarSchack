@@ -4,7 +4,7 @@
  * between the host and client
  *
  * @author  Reymond T
- * @version 1.2
+ * @version 1.3
  * @since   2022-04-10
  */
 
