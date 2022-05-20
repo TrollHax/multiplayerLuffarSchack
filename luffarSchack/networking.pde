@@ -20,7 +20,7 @@ class Networking {
     incoming = "";
     pc = _pc;
 
-    if (pc == "Host"){
+    if (pc == "Host") {
       thisServerPc = new Server(luffarSchack.this, 25565);
     }
   }
@@ -45,10 +45,14 @@ class Networking {
       Client clientPc = thisServerPc.available();
       if (clientPc != null) {
         incoming = clientPc.readString();
+      } else {
+        incoming = "null";
       }
     } else if (pc == "Client") {
       if (thisClientPc.available() > 0) {
         incoming = thisClientPc.readString();
+      } else {
+        incoming = "null";
       }
     }
     return incoming;
