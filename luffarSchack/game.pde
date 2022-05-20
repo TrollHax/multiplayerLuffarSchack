@@ -3,7 +3,7 @@
  * for all actions and events in the game
  *
  * @author  Reymond T
- * @version 1.2
+ * @version 1.3
  * @since   2022-04-10
  */
 
@@ -143,7 +143,9 @@ class Game {
       incoming = "";
     }
 
-    //println(winCheck());
+    if (winCheck() == true) {
+      state = "WINNER";
+    }
   }
 
   //Function for drawing the grid
@@ -187,7 +189,14 @@ class Game {
           grid[x][y] == grid[x][y+3] &&
           grid[x][y] == grid[x][y+4] &&
           grid[x][y] != 0) { //Check vertical win
-          return true;
+
+          if (grid[x][y] == 1) {
+            winner = "Host is the winner!";
+            return true;
+          } else if (grid[x][y] == 2) {
+            winner = "Client is the winner!";
+            return true;
+          }
         }
       }
     }
@@ -198,7 +207,14 @@ class Game {
           grid[x][y] == grid[x+3][y] &&
           grid[x][y] == grid[x+4][y] &&
           grid[x][y] != 0) { //Check horizontal win
-          return true;
+
+          if (grid[x][y] == 1) {
+            winner = "Host is the winner!";
+            return true;
+          } else if (grid[x][y] == 2) {
+            winner = "Client is the winner!";
+            return true;
+          }
         }
       }
     }
@@ -209,7 +225,14 @@ class Game {
           grid[x][y] == grid[x+3][y+3] &&
           grid[x][y] == grid[x+4][y+4] &&
           grid[x][y] != 0) { //Check diagonal-topLeft-bottomRight win
-          return true;
+
+          if (grid[x][y] == 1) {
+            winner = "Host is the winner!";
+            return true;
+          } else if (grid[x][y] == 2) {
+            winner = "Client is the winner!";
+            return true;
+          }
         }
       }
     }
@@ -220,7 +243,14 @@ class Game {
           grid[x][y] == grid[x-3][y+3] &&
           grid[x][y] == grid[x-4][y+4] &&
           grid[x][y] != 0) { //Check diagonal-topRight-bottomLeft win
-          return true;
+
+          if (grid[x][y] == 1) {
+            winner = "Host is the winner!";
+            return true;
+          } else if (grid[x][y] == 2) {
+            winner = "Client is the winner!";
+            return true;
+          }
         }
       }
     }

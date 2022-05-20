@@ -3,7 +3,7 @@
  * for all of the menus used by the game
  *
  * @author  Reymond T
- * @version 1.2
+ * @version 1.3
  * @since   2022-04-10
  */
 
@@ -61,5 +61,13 @@ class Menu {
     rect(width/2, height/2, 1200, 200);
     fill(255);
     text(hostAdress, width/2, height/2);
+  }
+
+  //Function for drawing the win screen
+  void drawWinnerScreen() {
+    image(bg, 0, 0);
+    textSize(200);
+    fill(255);
+    text(winner, width/2, height/2);
   }
 }

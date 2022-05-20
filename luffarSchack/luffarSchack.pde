@@ -2,7 +2,7 @@ import processing.net.*; //Enables networking
 import java.net.InetAddress; //Provides function for getting server IP-adress
 
 //Variables
-String state;
+String state, winner;
 PImage bg;
 Menu gameMenu;
 Game thisGame;
@@ -46,6 +46,11 @@ void draw() {
   case "GAME" :
     thisGame.run();
     break;
+
+  case "WINNER" :
+  gameMenu.drawWinnerScreen();
+  break;
+  
   }
 }
 
