@@ -60,7 +60,7 @@ void keyPressed() {
     } else if (key == ENTER) {
       network.createClient(gameMenu.hostAdress);
       thisGame.gameState = "CLIENT";
-      network.sendData("1");
+      network.sendData("START");
       state = "GAME";
     }
   }
@@ -92,9 +92,13 @@ void mouseReleased() {
     if (thisGame.grid[row][col] == 0) { //Checks if selected box is empty
       if (mouseButton == LEFT && thisGame.gameState == "HOST" && thisGame.hostTurn) {
         thisGame.grid[row][col] = 1;
+        thisGame.hostTurn = false;
+        thisGame.sentData = false;
         network.sendData(row + "," + col);
       } else if (mouseButton == LEFT && thisGame.gameState == "CLIENT" && thisGame.clientTurn) {
         thisGame.grid[row][col] = 2;
+        thisGame.clientTurn = false;
+        thisGame.sentData = false;
         network.sendData(row + "," + col);
       }
     }

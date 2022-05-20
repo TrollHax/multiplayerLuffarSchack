@@ -12,7 +12,7 @@ class Game {
   int[][] grid;
   int gridSize;
   String gameState;
-  boolean hostTurn, clientTurn;
+  boolean hostTurn, clientTurn, sentData;
 
 
   Game() {
@@ -48,77 +48,79 @@ class Game {
 
     //Check if this player is the host or client and reads text from opposite player
     if (gameState == "HOST") {
-      color objColor;
+      String incoming = network.readData();
+      color objColor = color(0, 0, 0);
+
+      if (incoming.equals("hostTurn") == true) {
+        hostTurn = true;
+      }
+
       if (hostTurn) {
         objColor = color(255, 0, 0);
-        network.sendData("false");
-      } else {
-        objColor = color(125);
-        network.sendData("true");
+      } else if (!hostTurn && !sentData) {
+        objColor = color(125, 125, 125);
+        network.sendData("clientTurn");
+        sentData = true;
       }
-      stroke(objColor);
+      println(sentData);
+      fill(objColor);
       pushMatrix();
       translate(mouseX, mouseY);
       ellipseMode(CENTER);
       noStroke();
       ellipse(0, 0, (gridSize/2)+10, (gridSize/2)+10);
       popMatrix();
-      Client otherPc = network.thisServerPc.available();
-      if (otherPc != null) {
-        String incoming = network.readData();
+
+      if (incoming.contains(",")) {
         int r = 0;
         int c = 0;
-        boolean read = false;
         if (incoming.length() == 3) {
           r = int(incoming.substring(0, 1));
           c = int(incoming.substring(2, 3));
-          read = true;
         }
         if (incoming.length() == 4 && incoming != "false" && incoming != "true") {
           if (incoming.indexOf(',') == 1) {
             r = int(incoming.substring(0, 1));
             c = int(incoming.substring(2));
-            read = true;
           } else if (incoming.indexOf(',') == 2) {
             r = int(incoming.substring(0, 2));
             c = int(incoming.substring(3));
-            read = true;
           }
         }
         if (incoming.length() == 5 && incoming != "false" && incoming != "true") {
           r = int(incoming.substring(0, 2));
           c = int(incoming.substring(3));
-          read = true;
         }
-        if (read) {
-          grid[r][c] = 2;
-          println(grid[r][c]);
-          network.sendData("false");
-          read = false;
-        }
+        grid[r][c] = 2;
       }
     }
 
     if (gameState == "CLIENT") {
-      color objColor = color(0);
-      if (network.thisClientPc.available() > 0) {
-        stroke(objColor);
-        pushMatrix();
-        translate(mouseX, mouseY);
-        line(-15, -15, 15, 15);
-        line(-15, 15, 15, -15);
-        popMatrix();
-        String incoming = network.readData();
+      String incoming = network.readData();
+      color objColor = color(0, 0, 0);
+
+      if (incoming.equals("clientTurn") == true) {
+        clientTurn = true;
+      }
+
+      if (clientTurn) {
+        objColor = color(0, 0, 255);
+      } else if (!clientTurn && !sentData) {
+        objColor = color(125, 125, 125);
+        network.sendData("hostTurn");
+        sentData = true;
+      }
+      println(objColor == color(0, 0, 255));
+      stroke(objColor);
+      pushMatrix();
+      translate(mouseX, mouseY);
+      line(-15, -15, 15, 15);
+      line(-15, 15, 15, -15);
+      popMatrix();
+
+      if (incoming.contains(",")) {
         int r = 0;
         int c = 0;
-        if (incoming == "false") {
-          objColor = color(125);
-          clientTurn = false;
-        }
-        if (incoming == "true") {
-          objColor = color(0, 0, 255);
-          clientTurn = true;
-        }
         if (incoming.length() == 3) {
           r = int(incoming.substring(0, 1));
           c = int(incoming.substring(2, 3));
@@ -137,12 +139,11 @@ class Game {
           c = int(incoming.substring(3));
         }
         grid[r][c] = 1;
-        network.sendData("false");
-        println(grid[r][c]);
       }
+      incoming = "";
     }
 
-    println(winCheck());
+    //println(winCheck());
   }
 
   //Function for drawing the grid

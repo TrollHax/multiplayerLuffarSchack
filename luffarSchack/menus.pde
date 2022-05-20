@@ -43,10 +43,9 @@ class Menu {
     text("Waiting for player...", width/2, height/2);
     textSize(50);
     text("IP-Adress (Give to other player):" + network.getIP(), width/2, 1040);
-    Client otherPc = network.thisServerPc.available();
-    if (otherPc != null) {
-      state = "GAME";
+    if (network.readData().equals("START") == true) {
       thisGame.hostTurn = true;
+      state = "GAME";
     }
   }
 
