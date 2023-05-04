@@ -3,7 +3,7 @@
  * for all of the menus used by the game
  *
  * @author  Reymond T
- * @version 1.3
+ * @version 1.4
  * @since   2022-04-10
  */
 
@@ -24,7 +24,7 @@ class Menu {
     fill(255);
     text("Networked Luffarschack", width/2, 50);
     textSize(75);
-    text("Select mode", width/2, 300);
+    text("Select mode", width/2, (height/2)-150);
     fill(125);
     strokeWeight(5);
     stroke(255);
@@ -42,7 +42,7 @@ class Menu {
     fill(255);
     text("Waiting for player...", width/2, height/2);
     textSize(50);
-    text("IP-Adress (Give to other player):" + network.getIP(), width/2, 1040);
+    text("IP-Adress (Give to other player):" + network.getIP(), width/2, height-100);
     if (network.readData().equals("START") == true) {
       thisGame.hostTurn = true;
       state = "GAME";

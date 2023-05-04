@@ -11,7 +11,7 @@ boolean initializedHost, initializedClient;
 
 
 void setup() {
-  fullScreen();
+  size(1280, 720);
   bg = loadImage("Data/Images/gradientV2.png");
   gameMenu = new Menu();
   thisGame = new Game();
